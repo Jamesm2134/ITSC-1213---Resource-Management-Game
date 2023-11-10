@@ -1,0 +1,34 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+/**
+ *
+ * @author jamck
+ */
+public class Wood extends Resource {
+    /**
+     * Creates a new Corn resource with the given name and initializes the quantity to 0.
+     *
+     * @param name the name of the Corn resource
+     */
+   private int woodAmount = 250;
+    public Wood(String name) {
+        super(name); // Call the constructor of the parent class (Resource) with the given name
+    }
+    
+    public int getWoodAmount() {
+        return woodAmount;
+    }
+
+    public void setWoodAmount(int newWoodAmount) {
+        this.woodAmount = newWoodAmount;
+    }
+    
+    public void updateWoodAmount(int amountToSubtract) {
+    // Subtract the specified amount from the current cornAmount
+    this.woodAmount -= amountToSubtract;
+}
+    
+}
