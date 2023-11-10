@@ -1,0 +1,26 @@
+public class Corn extends Resource {
+
+    /**
+     * Creates a new Corn resource with the given name and initializes the quantity to 0.
+     *
+     * @param name the name of the Corn resource
+     */
+   private int cornAmount = 50;
+    public Corn(String name) {
+        super(name); // Call the constructor of the parent class (Resource) with the given name
+    }
+    
+    public int getCornAmount() {
+        return cornAmount;
+    }
+
+    public void setCornAmount(int newCornAmount) {
+        this.cornAmount = newCornAmount;
+    }
+    
+    public void updateCornAmount(int amountToSubtract) {
+    // Subtract the specified amount from the current cornAmount
+    this.cornAmount -= amountToSubtract;
+}
+
+}
