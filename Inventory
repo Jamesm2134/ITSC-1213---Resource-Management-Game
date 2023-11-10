@@ -1,0 +1,32 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+/**
+ *
+ * @author jamck
+ */
+  
+public class Inventory {
+    private Wheat wheatFarmInstance;
+    private Corn cornFarmInstance;
+    private Rice riceFarmInstance;
+    private Wood woodFarmInstance;
+
+    public Inventory(Wheat wheatFarmInstance, Corn cornFarmInstance, Rice riceFarmInstance, Wood woodFarmInstance) {
+        this.wheatFarmInstance = wheatFarmInstance;
+        this.cornFarmInstance = cornFarmInstance;
+        this.riceFarmInstance = riceFarmInstance;
+        this.woodFarmInstance = woodFarmInstance;
+    }
+
+    // Other methods...
+
+    public void displayInventory() {
+        System.out.println("Wood: " + woodFarmInstance.getWoodAmount());
+        System.out.println("Corn: " + cornFarmInstance.getCornAmount());
+        System.out.println("Wheat: " + wheatFarmInstance.getWheatAmount());
+        System.out.println("Rice: " + riceFarmInstance.getRiceAmount());
+    }
+}
