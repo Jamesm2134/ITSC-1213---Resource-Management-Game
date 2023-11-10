@@ -1,0 +1,20 @@
+public class Rice extends Resource {
+    private int riceAmount = 50;
+
+    public Rice(String name) {
+        super(name);
+    }
+
+    public int getRiceAmount() {
+        return riceAmount;
+    }
+
+    public void setRiceAmount(int newRiceAmount) {
+        this.riceAmount = newRiceAmount;
+    }
+
+    public void updateRiceAmount(int amountToSubtract) {
+        // Subtract the specified amount from the current riceAmount
+        this.riceAmount -= amountToSubtract;
+    }
+}
