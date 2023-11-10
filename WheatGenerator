@@ -1,0 +1,17 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+/**
+ *
+ * @author jamck
+ */
+import java.util.*;
+public class WheatGenerator extends Generator {
+    
+    public WheatGenerator(String name, ArrayList<Resource> constructionCost, int resourceProductionRate, int numberConstructed, Resource product) {
+        super(name, constructionCost, resourceProductionRate, numberConstructed, product);
+    }
+
+}
