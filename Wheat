@@ -1,0 +1,23 @@
+public class Wheat extends Resource {
+
+    /**
+     * Creates a new Corn resource with the given name and initializes the quantity to 0.
+     *
+     * @param name the name of the Corn resource
+     */
+    private int wheatAmount = 50;
+    public void updateWheatAmount(int amountToAdd) {
+        this.wheatAmount -= amountToAdd;
+    }
+    public Wheat(String name) {
+        super(name); // Call the constructor of the parent class (Resource) with the given name
+    }
+    
+    public int getWheatAmount() {
+        return wheatAmount;
+    }
+
+    public void setWheatAmount(int newWheatAmount) {
+        this.wheatAmount = newWheatAmount;
+    }
+}
