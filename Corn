@@ -18,13 +18,14 @@ public class Corn extends Resource {
         this.cornAmount = newCornAmount;
     }
     
-    public void updateCornAmount(int amountToSubtract) {
-        this.cornAmount -= amountToSubtract;
-    }
+    public void updateCornAmount(int amountToAdd) {
+    this.cornAmount += amountToAdd; // Change this line to add the amount
+}
     
     @Override
-    public void collectResourceAmount(int amountToAdd) {
-        this.cornAmount += amountToAdd;
+    public void collectResourceAmount(int amount) {
+        // Assuming cornAmount is an instance variable in the Corn class
+        cornAmount += amount;
     }
     
     public int collectCorn(){
