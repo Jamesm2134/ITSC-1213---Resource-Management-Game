@@ -1,27 +1,46 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+import java.util.ArrayList;
 
-/**
- *
- * @author jamck
- */
-  
 public class Inventory {
     private Wheat wheatFarmInstance;
     private Corn cornFarmInstance;
     private Rice riceFarmInstance;
     private Wood woodFarmInstance;
+    private ArrayList<Generator> generators;  // Remove the initialization here
 
-    public Inventory(Wheat wheatFarmInstance, Corn cornFarmInstance, Rice riceFarmInstance, Wood woodFarmInstance) {
+    
+
+    boolean resourcesCollected = false;
+
+    public Inventory(Wheat wheatFarmInstance, Corn cornFarmInstance, Rice riceFarmInstance, Wood woodFarmInstance, ArrayList<Generator> generators) {
         this.wheatFarmInstance = wheatFarmInstance;
         this.cornFarmInstance = cornFarmInstance;
         this.riceFarmInstance = riceFarmInstance;
         this.woodFarmInstance = woodFarmInstance;
+        this.generators = generators;  // Set the generators list passed as a parameter
     }
 
-    // Other methods...
+    public void collectResources() {
+    if (!resourcesCollected) {
+        if (!generators.isEmpty()) {  // Check if there are generators
+            for (Generator generator : generators) {
+                if (generator instanceof CornGenerator) {
+                    CornGenerator cornGenerator = (CornGenerator) generator;
+                    cornGenerator.generateResource();
+                }
+                // Add similar blocks for other types of generators if needed
+            }
+
+            resourcesCollected = true;  // Set the flag to true after collecting resources
+
+            System.out.println("Resources Collected!");
+            displayInventory();
+        } else {
+            System.out.println("No generators available. Cannot collect resources!");
+        }
+    } else {
+        System.out.println("Resources already collected this round!");
+    }
+}
 
     public void displayInventory() {
         System.out.println("Wood: " + woodFarmInstance.getWoodAmount());
