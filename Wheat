@@ -7,7 +7,7 @@ public class Wheat extends Resource {
      */
     private int wheatAmount = 50;
     public void updateWheatAmount(int amountToAdd) {
-        this.wheatAmount -= amountToAdd;
+        this.wheatAmount += amountToAdd;
     }
     public Wheat(String name) {
         super(name);
