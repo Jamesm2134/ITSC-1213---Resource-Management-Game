@@ -7,7 +7,7 @@ public class Corn extends Resource {
      */
    private int cornAmount = 50;
     public Corn(String name) {
-        super(name); // Call the constructor of the parent class (Resource) with the given name
+        super(name);
     }
     
     public int getCornAmount() {
@@ -19,8 +19,21 @@ public class Corn extends Resource {
     }
     
     public void updateCornAmount(int amountToSubtract) {
-    // Subtract the specified amount from the current cornAmount
-    this.cornAmount -= amountToSubtract;
-}
+        this.cornAmount -= amountToSubtract;
+    }
+    
+    @Override
+    public void collectResourceAmount(int amountToAdd) {
+        this.cornAmount += amountToAdd;
+    }
+    
+    public int collectCorn(){
+        return cornAmount;
+    }
+    
+    public void collectCornAmount(int amountToAdd) {
+        this.cornAmount += amountToAdd;
+    }
+
 
 }
