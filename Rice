@@ -1,10 +1,15 @@
 public class Rice extends Resource {
-    private int riceAmount = 50;
 
+    /**
+     * Creates a new Rice resource with the given name and initializes the quantity to 0.
+     *
+     * @param name the name of the Corn resource
+     */
+   private int riceAmount = 50;
     public Rice(String name) {
         super(name);
     }
-
+    
     public int getRiceAmount() {
         return riceAmount;
     }
@@ -12,21 +17,29 @@ public class Rice extends Resource {
     public void setRiceAmount(int newRiceAmount) {
         this.riceAmount = newRiceAmount;
     }
-
-    public void updateRiceAmount(int amountToSubtract) {
-        // Subtract the specified amount from the current riceAmount
-        this.riceAmount -= amountToSubtract;
-    }
-    public void collectRiceAmount(int amountToAdd) {
-        this.riceAmount += amountToAdd;
+    
+    public void updateRiceAmount(int amountToAdd) {
+        this.riceAmount += amountToAdd; // Change this line to add the amount
+}
+    public void updateRiceAmountLost(int amountToAdd) {
+        this.riceAmount -= amountToAdd; // Change this line to add the amount
+}
+    
+    @Override
+    public void collectResourceAmount(int amount) {
+        // Assuming cornAmount is an instance variable in the Corn class
+        riceAmount += amount;
     }
     
     public int collectRice(){
         return riceAmount;
     }
     
-    @Override
-    public void collectResourceAmount(int amountToAdd) {
+    public void collectRiceAmount(int amountToAdd) {
         this.riceAmount += amountToAdd;
     }
+    
+   
+
+
 }
