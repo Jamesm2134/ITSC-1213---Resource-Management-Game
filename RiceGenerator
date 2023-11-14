@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+
+public class RiceGenerator extends Generator {
+
+    public RiceGenerator(String name, int numberConstructed, Resource product) {
+        super(name, new ArrayList<>(), 100, numberConstructed, product);
+        generateResource(); // Automatically generate resources when the generator is created
+    }
+
+  public int generateResource() {
+        int generatedAmount = 100;  // Assuming 100 corn is generated each time
+
+        if (product instanceof Rice) {
+            Rice riceProduct = (Rice) product;
+            riceProduct.updateRiceAmount(-25);  // Subtract 25 from cornAmount
+        } else {
+            System.out.println("Error: This generator can only produce Corn.");
+        }
+
+        return generatedAmount;
+    }
+  
+  public void updateResources() {
+    }
+   
+   
+}
