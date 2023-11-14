@@ -18,34 +18,50 @@ public class Inventory {
         this.woodFarmInstance = woodFarmInstance;
         this.generators = generators;  // Set the generators list passed as a parameter
     }
-
+    
     public void collectResources() {
     if (!resourcesCollected) {
-        if (!generators.isEmpty()) {  // Check if there are generators
+        if (!generators.isEmpty()) {
+            int totalCornGenerated = 0;  // Initialize a variable to store the total corn generated
+
+            // Iterate over each generator in the list
             for (Generator generator : generators) {
+                // Check if the current generator is an instance of CornGenerator
                 if (generator instanceof CornGenerator) {
+                    // Cast the generator to CornGenerator
                     CornGenerator cornGenerator = (CornGenerator) generator;
-                    cornGenerator.generateResource();
+                    // Generate resources using the CornGenerator and add to the total
+                    totalCornGenerated += cornGenerator.generateResource();
                 }
                 // Add similar blocks for other types of generators if needed
             }
 
-            resourcesCollected = true;  // Set the flag to true after collecting resources
+            // Update the corn amount with the total corn generated
+            cornFarmInstance.updateCornAmount(totalCornGenerated);
 
-            System.out.println("Resources Collected!");
+            // Set the flag to true after collecting resources
+            resourcesCollected = true;
+
+            // Display the updated inventory after collecting resources
             displayInventory();
         } else {
+            // Print a message if there are no generators available
             System.out.println("No generators available. Cannot collect resources!");
         }
     } else {
+        // Print a message if resources have already been collected in this round
         System.out.println("Resources already collected this round!");
     }
 }
 
+
+
+  
+
     public void displayInventory() {
-        System.out.println("Wood: " + woodFarmInstance.getWoodAmount());
-        System.out.println("Corn: " + cornFarmInstance.getCornAmount());
-        System.out.println("Wheat: " + wheatFarmInstance.getWheatAmount());
-        System.out.println("Rice: " + riceFarmInstance.getRiceAmount());
-    }
+    System.out.println("Wood: " + woodFarmInstance.getWoodAmount());
+    System.out.println("Corn: " + cornFarmInstance.getCornAmount());
+    System.out.println("Wheat: " + wheatFarmInstance.getWheatAmount());
+    System.out.println("Rice: " + riceFarmInstance.getRiceAmount());
+}
 }
