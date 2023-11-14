@@ -7,16 +7,21 @@ public class CornGenerator extends Generator {
         generateResource(); // Automatically generate resources when the generator is created
     }
 
-    public void updateResources() {
-    generateResource(); // Assuming this method handles the resource generation
-    }
-    public void generateResource() {
+  public int generateResource() {
+        int generatedAmount = 100;  // Assuming 100 corn is generated each time
+
         if (product instanceof Corn) {
             Corn cornProduct = (Corn) product;
-            cornProduct.collectResourceAmount(getResourceProductionRate()); // Produce resources based on the production rate
+            cornProduct.updateCornAmount(-25);  // Subtract 25 from cornAmount
         } else {
-            // Handle the case where the product is not an instance of Corn (optional)
             System.out.println("Error: This generator can only produce Corn.");
         }
+
+        return generatedAmount;
     }
+  
+  public void updateResources() {
+    }
+   
+   
 }
