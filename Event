@@ -1,16 +1,3 @@
-/**
- * The Event class represents a generic randomly occuring event in the game.
- * Events have a name
- * For this game, Farming simulator, the event is going to be a storm that removes a % of resources
- */
-public class Event {
-    private String eventTornado;
-
-    /**
-     * Creates a new Event with the given name
-     *
-     * @param eventTornado the name of the event
-     */
     public Event(String eventTornado) {
         this.eventTornado = eventTornado;
     }
@@ -23,5 +10,16 @@ public class Event {
     public String getName() {
         return eventTornado;
     }
+    /*
+    public void eventOccured(){
+        cornFarmInstance.updateCornAmount(25);
+        wheatFarmInstance.updateWheatAmount(25);
+        riceFarmInstance.updateRiceAmount(25);
+        woodFarmInstance.updateWoodAmount(25);
+        System.out.println("A Tornado has run through the farm!");
+        System.out.println("You lost: ");
+        System.out.println("25 of each crop and 30 wood");
+    }
+*/
 
 }
