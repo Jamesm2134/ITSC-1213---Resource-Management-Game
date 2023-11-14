@@ -1,25 +1,46 @@
-    public Event(String eventTornado) {
-        this.eventTornado = eventTornado;
+import java.util.ArrayList;
+
+public class Event {
+    
+    private String tornado;
+    private Wheat wheatFarmInstance;
+    private Corn cornFarmInstance;
+    private Rice riceFarmInstance;
+    private Wood woodFarmInstance;
+    private ArrayList<Generator> generators;
+
+    public Event(String tornado, Wheat wheatFarmInstance, Corn cornFarmInstance, Rice riceFarmInstance, Wood woodFarmInstance, ArrayList<Generator> generators) {
+        this.tornado = tornado;
+        this.wheatFarmInstance = wheatFarmInstance;
+        this.cornFarmInstance = cornFarmInstance;
+        this.riceFarmInstance = riceFarmInstance;
+        this.woodFarmInstance = woodFarmInstance;
+        this.generators = generators;
     }
 
-    /**
-     * Gets the name of the event.
-     *
-     * @return the name of the event
-     */
+
     public String getName() {
-        return eventTornado;
+        return tornado;
     }
-    /*
-    public void eventOccured(){
-        cornFarmInstance.updateCornAmount(25);
-        wheatFarmInstance.updateWheatAmount(25);
-        riceFarmInstance.updateRiceAmount(25);
-        woodFarmInstance.updateWoodAmount(25);
-        System.out.println("A Tornado has run through the farm!");
-        System.out.println("You lost: ");
-        System.out.println("25 of each crop and 30 wood");
-    }
-*/
 
+    public void eventOccurred() {
+    int amountLost = 25;
+
+    for (Generator generator : generators) {
+        if (generator instanceof CornGenerator) {
+            CornGenerator cornGenerator = (CornGenerator) generator;
+            cornGenerator.updateResources();  // Assuming this method deducts the resources
+        }
+        // Add similar blocks for other types of generators if needed
+    }
+
+    cornFarmInstance.updateCornAmountLost(amountLost);
+    wheatFarmInstance.updateWheatAmount(amountLost);
+    riceFarmInstance.updateRiceAmount(amountLost);
+    woodFarmInstance.updateWoodAmount(30);
+
+    System.out.println("A Tornado has run through the farm!");
+    System.out.println("You lost: ");
+    System.out.println("25 of each crop and 30 wood");
+}
 }
