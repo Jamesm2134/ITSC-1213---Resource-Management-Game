@@ -19,7 +19,10 @@ public class Corn extends Resource {
     }
     
     public void updateCornAmount(int amountToAdd) {
-    this.cornAmount += amountToAdd; // Change this line to add the amount
+        this.cornAmount += amountToAdd; // Change this line to add the amount
+}
+    public void updateCornAmountLost(int amountToAdd) {
+        this.cornAmount -= amountToAdd; // Change this line to add the amount
 }
     
     @Override
@@ -35,6 +38,8 @@ public class Corn extends Resource {
     public void collectCornAmount(int amountToAdd) {
         this.cornAmount += amountToAdd;
     }
+    
+   
 
 
 }
