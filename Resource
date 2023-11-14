@@ -76,4 +76,13 @@ public abstract class Resource {
             System.out.println("Not enough " + name + " to consume.");
         }
     }
+    
+    public String collectResoruces(){
+        return "Here";
+    }
+    
+     public abstract void collectResourceAmount(int amountToAdd);
+
+    
+    
 }
