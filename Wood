@@ -31,4 +31,18 @@ public class Wood extends Resource {
     this.woodAmount -= amountToSubtract;
 }
     
+    public void collectWoodAmount(int amountToAdd) {
+        this.woodAmount += amountToAdd;
+    }
+    
+    public int collectWood(){
+        return woodAmount;
+    }
+    
+    @Override
+    public void collectResourceAmount(int amountToAdd) {
+        this.woodAmount += amountToAdd;
+    }
+    
 }
+
