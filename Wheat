@@ -10,7 +10,7 @@ public class Wheat extends Resource {
         this.wheatAmount -= amountToAdd;
     }
     public Wheat(String name) {
-        super(name); // Call the constructor of the parent class (Resource) with the given name
+        super(name);
     }
     
     public int getWheatAmount() {
@@ -20,4 +20,21 @@ public class Wheat extends Resource {
     public void setWheatAmount(int newWheatAmount) {
         this.wheatAmount = newWheatAmount;
     }
+    public void collectWheatAmount(int amountToAdd) {
+        this.wheatAmount += amountToAdd;
+    }
+    
+    public int collectWheat(){
+        return wheatAmount;
+    }
+    
+    @Override
+    public void collectResourceAmount(int amountToAdd) {
+        this.wheatAmount += amountToAdd;
+    }
+    
+   
+    
+    
+
 }
