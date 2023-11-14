@@ -17,4 +17,16 @@ public class Rice extends Resource {
         // Subtract the specified amount from the current riceAmount
         this.riceAmount -= amountToSubtract;
     }
+    public void collectRiceAmount(int amountToAdd) {
+        this.riceAmount += amountToAdd;
+    }
+    
+    public int collectRice(){
+        return riceAmount;
+    }
+    
+    @Override
+    public void collectResourceAmount(int amountToAdd) {
+        this.riceAmount += amountToAdd;
+    }
 }
