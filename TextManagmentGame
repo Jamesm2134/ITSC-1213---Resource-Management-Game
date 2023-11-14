@@ -16,9 +16,12 @@ public class TextManagementGame {
     Wood woodFarmInstance = new Wood("wood");
     ArrayList<Generator> generatorsList = new ArrayList<>();  // Initialize the list of generators
     Inventory inventory = new Inventory(wheatFarmInstance, cornFarmInstance, riceFarmInstance, woodFarmInstance, generators);
+    Event tornadoEvent = new Event("Tornado", wheatFarmInstance, cornFarmInstance, riceFarmInstance, woodFarmInstance, generatorsList);
+
+
     
 
-Event event = new Event("event");
+
     
 
     // Define a Scanner for user input
@@ -36,6 +39,7 @@ Event event = new Event("event");
     /**
      * Check if a method should run with a 1 in number chance.
      *
+     * @param number
      * @return true if the method should run, false otherwise
      */
     public boolean haveEventThisTurn(int number) {
@@ -58,6 +62,7 @@ Event event = new Event("event");
     */
     public void viewGenerators() {
     int cornGeneratorsCount = 0;
+    int riceGeneratorsCount = 0;
 
     for (Generator generator : generators) {
         if (generator instanceof CornGenerator) {
@@ -116,25 +121,30 @@ Event event = new Event("event");
      * TODO : Add calculations to generate resources for the next turn
      */
     public void endRound() {
-        round++;
-        inventory.resourcesCollected = false;
+    round++;
+    inventory.resourcesCollected = false;
 
-
-
-        // Calculate corn production based on the number of CornGenerators
-        int cornProductionPerRound = generators.size() * 100;
-
-        // Update resource amounts for each CornGenerator
-        for (Generator generator : generators) {
-    if (generator instanceof CornGenerator) {
-        ((CornGenerator) generator).updateResources();
+    int oddsOfRandomEvent = 2; // a 50% chance of a random event occurring
+    if (haveEventThisTurn(oddsOfRandomEvent)) {
+        tornadoEvent.eventOccurred();
     }
+
+    // Calculate corn production based on the number of CornGenerators
+    int cornProductionPerRound = generators.size() * 100;
+
+    // Update resource amounts for each CornGenerator
+    for (Generator generator : generators) {
+        if (generator instanceof CornGenerator) {
+            ((CornGenerator) generator).generateResource();
+        }
+    }
+
+    // Now, collect the corn amount after generating resources
+    //cornFarmInstance.collectCornAmount(cornProductionPerRound);
+
+    System.out.println("Corn production for this round: " + cornProductionPerRound);
 }
 
-        cornFarmInstance.collectCornAmount(cornProductionPerRound);
-
-        System.out.println("Corn production for this round: " + cornProductionPerRound);
-    }
 
     /**
      * Adds a Generator object to the ArrayList of Generators.
@@ -173,15 +183,11 @@ Event event = new Event("event");
      */
     public void start() {
         System.out.println("Welcome to Farm Simulator!"); 
-        int oddsOfRandomEvent = 4; //a 25% chance of a random event occuring
 
         // Main game loop
         while (!isCriticalResourceEmpty()) {
             System.out.println("\nTime " + round);
-            if(haveEventThisTurn(oddsOfRandomEvent)){
-                //event.eventOccured();
-                
-            }
+            
             System.out.println("Options:");
             System.out.println("1. Collect resources");
             System.out.println("2. Manage resources");
