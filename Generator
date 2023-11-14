@@ -8,7 +8,7 @@ public abstract class Generator {
     private ArrayList<Resource> constructionCost;
     private int resourceProductionRate;
     private int numberConstructed;
-    private Resource product;
+    Resource product;
 
     /**
      * Creates a new Generator with the given name, construction cost, resource production rate, number constructed, and product.
