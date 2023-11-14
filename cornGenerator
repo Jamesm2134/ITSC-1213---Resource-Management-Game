@@ -1,0 +1,22 @@
+import java.util.ArrayList;
+
+public class CornGenerator extends Generator {
+
+    public CornGenerator(String name, int numberConstructed, Resource product) {
+        super(name, new ArrayList<>(), 100, numberConstructed, product);
+        generateResource(); // Automatically generate resources when the generator is created
+    }
+
+    public void updateResources() {
+    generateResource(); // Assuming this method handles the resource generation
+    }
+    public void generateResource() {
+        if (product instanceof Corn) {
+            Corn cornProduct = (Corn) product;
+            cornProduct.collectResourceAmount(getResourceProductionRate()); // Produce resources based on the production rate
+        } else {
+            // Handle the case where the product is not an instance of Corn (optional)
+            System.out.println("Error: This generator can only produce Corn.");
+        }
+    }
+}
