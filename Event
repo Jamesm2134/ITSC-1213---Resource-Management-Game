@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Event {
+public class Event implements Score {
     
     private String tornado;
     private Wheat wheatFarmInstance;
@@ -8,6 +8,7 @@ public class Event {
     private Rice riceFarmInstance;
     private Wood woodFarmInstance;
     private ArrayList<Generator> generators;
+    private int eventImpact;
 
     public Event(String tornado, Wheat wheatFarmInstance, Corn cornFarmInstance, Rice riceFarmInstance, Wood woodFarmInstance, ArrayList<Generator> generators) {
         this.tornado = tornado;
@@ -35,12 +36,20 @@ public class Event {
     }
 
     cornFarmInstance.updateCornAmountLost(amountLost);
-    wheatFarmInstance.updateWheatAmount(amountLost);
-    riceFarmInstance.updateRiceAmount(amountLost);
+    riceFarmInstance.updateRiceAmountLost(amountLost);
+    wheatFarmInstance.updateWheatAmountLost(amountLost);
     woodFarmInstance.updateWoodAmount(30);
 
     System.out.println("A Tornado has run through the farm!");
     System.out.println("You lost: ");
     System.out.println("25 of each crop and 30 wood");
+    
+    
 }
+    
+    @Override
+    public int scoreImpact() {
+        // Impact is directly provided for events
+        return eventImpact;
+    }
 }
