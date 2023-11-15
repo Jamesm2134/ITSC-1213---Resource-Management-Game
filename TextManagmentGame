@@ -1,12 +1,19 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.*;
 import java.util.Random;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+
 
 /**
- * The TextManagementGame class represents a text-based management game where the player manages resources and resource generators.
- */
+* The TextManagementGame class represents a Farm Simulator game where the player manages resources and resource generators. 
+* The primary source is wood and the user manages corn, wheat and rice. There is also a natural disaster that happens randomly where the player can lose resources
+*/
 public class TextManagementGame {
-    // Define game variables
     private int round;
     private ArrayList<Resource> resources = new ArrayList<Resource>();
     private ArrayList<Generator> generators = new ArrayList<Generator>();
@@ -17,37 +24,30 @@ public class TextManagementGame {
     ArrayList<Generator> generatorsList = new ArrayList<>();  // Initialize the list of generators
     Inventory inventory = new Inventory(wheatFarmInstance, cornFarmInstance, riceFarmInstance, woodFarmInstance, generators);
     Event tornadoEvent = new Event("Tornado", wheatFarmInstance, cornFarmInstance, riceFarmInstance, woodFarmInstance, generatorsList);
-
-
     
 
-
     
-
     // Define a Scanner for user input
     private Scanner scanner;
-
+    
     /**
-     * Creates a new TextManagementGame instance with initial resource and time values.
-     * TODO : Add starting resources
-     */
+    * Creates a new TextManagementGame instance with initial resource and time values.
+    */
     public TextManagementGame() {
         round = 1;       // Start at time 1
         scanner = new Scanner(System.in);
     }
-
+    
     /**
-     * Check if a method should run with a 1 in number chance.
-     *
-     * @param number
-     * @return true if the method should run, false otherwise
-     */
+    * @param number
+    * @return true if the method should run, false otherwise
+    */
     public boolean haveEventThisTurn(int number) {
         Random random = new Random();
-        int chance = random.nextInt(number); // Generates a random number between 0 (inclusive) and number (exclusive)
-        return chance == 0; // Returns true with a 1 in number chance
+        int chance = random.nextInt(number);
+        return chance == 0;
     }
-
+    
     /**
     * Prints the list of resources
     */
@@ -56,147 +56,239 @@ public class TextManagementGame {
             System.out.println(r);
         }
     }
-
+    
     /**
     * Prints the list of Generators
     */
     public void viewGenerators() {
-    int cornGeneratorsCount = 0;
-    int riceGeneratorsCount = 0;
-
-    for (Generator generator : generators) {
-        if (generator instanceof CornGenerator) {
-            // If the generator is a CornGenerator, increment the count
-            cornGeneratorsCount++;
+        int cornGeneratorsCount = 0;
+        int riceGeneratorsCount = 0;
+        int wheatGeneratorsCount = 0;
+        
+        for (Generator generator : generators) {
+            if (generator instanceof CornGenerator) {
+                cornGeneratorsCount++;
+            }
+        }
+        
+        for (Generator generator : generators) {
+            if (generator instanceof RiceGenerator) {
+                riceGeneratorsCount++;
+            }
+        }
+        
+        for (Generator generator : generators) {
+            if (generator instanceof WheatGenerator) {
+                wheatGeneratorsCount++;
+            }
         }
     }
-
-    // Print the number of Corn Generators
-    System.out.println("Number of Corn Generators: " + cornGeneratorsCount);
-}
-
-    /**
-     * Checks if a Generator can be constructed and then adds it to the list of Generators
-     * TODO : ADD LOGIC
-     */
-     private int cornGeneratorsCount = 0;
-
+    int cornGeneratorsCount = 0;
+    int riceGeneratorsCount = 0;
+    int wheatGeneratorsCount = 0;
+    
     public void constructGenerator() {
         System.out.println("Choose a crop generator to buy:");
         System.out.println("1. Corn Generator (Cost: 100 wood)");
-        // Add options for other crop generators if needed
-
-        System.out.print("Enter your choice (1 for Corn Generator): ");
+        System.out.println("2. Wheat Generator (Cost: 100 wood)");
+        System.out.println("3. Rice Generator (Cost: 100 wood)");
+        
+        
+        System.out.print("Enter your choice (1 for Corn Generator, 2 for Rice Generator and 3 for Wheat Generator): ");
         int choice = scanner.nextInt();
-
+        
         switch (choice) {
             case 1:
-                buyCornGenerator();
-                break;
-            // Add cases for other crop generators if needed
+            buyCornGenerator();
+            break;
+            case 2:
+            buyWheatGenerator();
+            break;
+            case 3:
+            buyRiceGenerator();
+            break;
+            
             default:
-                System.out.println("Invalid choice. Please try again.");
+            System.out.println("Invalid choice. Please try again.");
         }
     }
     
     public ArrayList<Generator> getGenerators() {
         return generators;
     }
-    
+    /**
+    * Lets the user create a new generator object, this will add to the amount of resources collected each round
+    */
     private void buyCornGenerator() {
-        // Check if there's enough wood to buy a Corn Generator
         if (woodFarmInstance.getWoodAmount() >= 100) {
             CornGenerator newCornGenerator = new CornGenerator("CornGenerator", 10, new Corn("CornResource"));
             generators.add(newCornGenerator);
-            woodFarmInstance.updateWoodAmount(100); // Deduct 100 wood for buying a generator
+            woodFarmInstance.updateWoodAmount(100); 
             cornGeneratorsCount++;
             System.out.println("CornGenerator purchased!");
-        } else {
+            } else {
             System.out.println("Not enough wood to buy a Corn Generator.");
         }
     }
-
-    /** 
-     * Increments the time counter and then adds more resources based on what generators are present
-     * TODO : Add calculations to generate resources for the next turn
-     */
-    public void endRound() {
-    round++;
-    inventory.resourcesCollected = false;
-
-    int oddsOfRandomEvent = 2; // a 50% chance of a random event occurring
-    if (haveEventThisTurn(oddsOfRandomEvent)) {
-        tornadoEvent.eventOccurred();
-    }
-
-    // Calculate corn production based on the number of CornGenerators
-    int cornProductionPerRound = generators.size() * 100;
-
-    // Update resource amounts for each CornGenerator
-    for (Generator generator : generators) {
-        if (generator instanceof CornGenerator) {
-            ((CornGenerator) generator).generateResource();
+    /**
+    * Lets the user create a new generator object, this will add to the amount of resources collected each round
+    */
+    private void buyRiceGenerator() {
+        // Check if there's enough wood to buy a Corn Generator
+        if (woodFarmInstance.getWoodAmount() >= 100) {
+            RiceGenerator newRiceGenerator = new RiceGenerator("RiceGenerator", 10, new Corn("RiceResource"));
+            generators.add(newRiceGenerator);
+            woodFarmInstance.updateWoodAmount(100); 
+            riceGeneratorsCount++;
+            System.out.println("Rice Generator purchased!");
+            } else {
+            System.out.println("Not enough wood to buy a Rice Generator.");
         }
     }
-
-    // Now, collect the corn amount after generating resources
-    //cornFarmInstance.collectCornAmount(cornProductionPerRound);
-
-    System.out.println("Corn production for this round: " + cornProductionPerRound);
-}
-
-
     /**
-     * Adds a Generator object to the ArrayList of Generators.
-     *
-     * @param Generator the Generator object to add
-     */
+    * Lets the user create a new generator object, this will add to the amount of resources collected each round
+    */
+    private void buyWheatGenerator() {
+        // Check if there's enough wood to buy a Wheat Generator
+        if (woodFarmInstance.getWoodAmount() >= 100) {
+            WheatGenerator newWheatGenerator = new WheatGenerator("WheatGenerator", 10, new Wheat("WheatResource"));
+            generators.add(newWheatGenerator);
+            woodFarmInstance.updateWoodAmount(100); 
+            wheatGeneratorsCount++;
+            System.out.println("WheatGenerator purchased!");
+            } else {
+            System.out.println("Not enough wood to buy a Wheat Generator.");
+        }
+    }
+    
+    
+    
+    /**
+    * Increments the time counter and then adds more resources based on what generators are present
+    */
+    public void endRound() {
+        round++;
+        woodFarmInstance.collectWoodAmount(100);
+        inventory.resourcesCollected = false;
+        
+        int oddsOfRandomEvent = 2;
+        if (haveEventThisTurn(oddsOfRandomEvent)) {
+            tornadoEvent.eventOccurred();
+        }
+        
+        int cornProductionPerRound = generators.size() * 100;
+        int riceProductionPerRound = generators.size() * 100;
+        int wheatProductionPerRound = generators.size() * 100;
+        
+        // Update resource amounts for each CornGenerator
+        for (Generator generator : generators) {
+            if (generator instanceof CornGenerator) {
+                ((CornGenerator) generator).generateResource();
+            }
+        }
+        for (Generator generator : generators) {
+            if (generator instanceof RiceGenerator) {
+                ((RiceGenerator) generator).generateResource();
+            }
+        }
+        for (Generator generator : generators) {
+            if (generator instanceof WheatGenerator) {
+                ((WheatGenerator) generator).generateResource();
+            }
+        }
+        
+    }
+    
+    
+    /**
+    * Adds a Generator object to the ArrayList of Generators.
+    *
+    * @param Generator the Generator object to add
+    */
     public void addGenerator(Generator generator) {
         generators.add(generator);
     }
-
+    
     /**
-     * Adds a Resource object to the ArrayList of resources.
-     *
-     * @param resource the Resource object to add
-     */
+    * Adds a Resource object to the ArrayList of resources.
+    *
+    * @param resource the Resource object to add
+    */
     public void addResource(Resource resource) {
         resources.add(resource);
     }
-
-    /**
-     * Checks if we are out of any critical resources
-     *
-     * @return returns true if we are out of any critical resources returns false otherwise
-    */
-    public boolean isCriticalResourceEmpty(){
-        for(Resource r : resources){
-            if(r.isCritical() && r.getQuantity() == 0){
-                return true;
-            }
-        }
-        return false;
-    }
     
     /**
-     * Starts the game and manages the game loop.
-     */
+    * Checks if we are out of any critical resources
+    *
+    * @return returns true if we are out of any critical resources returns false otherwise
+    */
+    public boolean isRiceEmpty() {
+        for (Resource r : resources) {
+            if (r instanceof Rice) {
+                riceFarmInstance.riceAmount += r.getQuantity();
+            }
+        }
+        return riceFarmInstance.riceAmount <= 0;
+    }
+    /**
+    * Checks to see if one of the critical resources is depleted, if so the game is over
+    */
+    public boolean isCornEmpty() {
+        
+        for (Resource r : resources) {
+            if (r instanceof Corn) {
+                cornFarmInstance.cornAmount += r.getQuantity();
+            }
+        }
+        
+        return cornFarmInstance.cornAmount <= 0;
+    }
+    /**
+    * Checks to see if one of the critical resources is depleted, if so the game is over
+    */
+    public boolean isWheatmpty() {
+        
+        for (Resource r : resources) {
+            if (r instanceof Wheat) {
+                wheatFarmInstance.wheatAmount += r.getQuantity();
+            }
+        }
+        
+        return wheatFarmInstance.wheatAmount <= 0;
+    }
+    /**
+    * Sorts the resources in decending order
+    */
+    public void sortResources() {
+        Collections.sort(resources);
+        System.out.println("Resources sorted by quantity:");
+        for (Resource resource : resources) {
+            System.out.println(resource.getName() + ": " + resource.getQuantity());
+        }
+    }
+    
+    
+    /**
+    * Starts the game and manages the game loop.
+    */
     public void start() {
-        System.out.println("Welcome to Farm Simulator!"); 
-
+        System.out.println("Welcome to Farm Simulator!");
+        
         // Main game loop
-        while (!isCriticalResourceEmpty()) {
-            System.out.println("\nTime " + round);
+        while (!isRiceEmpty()) {
+            System.out.println("\nRound " + round);
             
             System.out.println("Options:");
             System.out.println("1. Collect resources");
             System.out.println("2. Manage resources");
             System.out.println("3. Add a new Generator");
             System.out.println("4. End round");
+            System.out.println("6. Score");
             System.out.println("5. Quit game");
+            
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
-
             switch (choice) {
                 case 1:
                     viewResources();
@@ -204,32 +296,87 @@ public class TextManagementGame {
                     break;
                 case 2:
                     viewGenerators();
+                    sortGenerators();
                     inventory.displayInventory();
                     break;
-                case 3: 
+                case 3:
                     constructGenerator();
                     break;
                 case 4:
                     endRound();
-                    woodFarmInstance.collectWoodAmount(100);
                     break;
                 case 5:
                     System.exit(0);
                     break;
+                case 6:
+                    printOverallScore();
+                    break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                System.out.println("Invalid choice. Please try again.");
             }
         }
-
-        System.out.println("Game Over! You ran out of resources.");
+        System.out.println("---------------------------------------------------------");
+        System.out.println("Game Over! You ran out of a critical resources.");
         System.out.println("You played for " + round + " rounds");
     }
-
     /**
-     * Main method to run the game
-     *
-     * @param args the command-line arguments (not used in this game)
-     */
+    * Prints the score for the user to see
+    */
+    public void printOverallScore() {
+        int overallScore = 0;
+        
+        // Calculate score from resources
+        for (Resource resource : inventory.getResources()) {
+            overallScore += resource.scoreImpact();
+        }
+
+        // Calculate score from generators
+        for (Generator generator : generators) {
+            overallScore += generator.scoreImpact();
+        }
+        
+        System.out.println("Overall Score: " + overallScore);
+    }
+    
+    /**
+    * Sorts the generator 
+    */
+    public void sortGenerators() {
+ 
+        int cornCount = 0;
+        int riceCount = 0;
+        int wheatCount = 0;
+    
+        
+        Map<String, Integer> counts = new HashMap<>();
+        counts.put("Corn", 0);
+        counts.put("Rice", 0);
+        counts.put("Wheat", 0);
+        
+        for (Generator generator : generators) {
+            if (generator instanceof CornGenerator) {
+                counts.put("Corn", counts.get("Corn") + 1);
+                } else if (generator instanceof RiceGenerator) {
+                counts.put("Rice", counts.get("Rice") + 1);
+                } else if (generator instanceof WheatGenerator) {
+                counts.put("Wheat", counts.get("Wheat") + 1);
+            }
+        }
+        
+        counts.entrySet()
+        .stream()
+        .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
+        .forEach(entry -> {
+            String generatorType = entry.getKey();
+            int count = entry.getValue();
+            System.out.println("Number of " + generatorType + " Generators: " + count);
+        });
+        
+    }
+    /**
+    * Main Method
+     * @param args
+    */
     public static void main(String[] args) {
         TextManagementGame game = new TextManagementGame();
         game.start();
