@@ -14,7 +14,7 @@ public class RiceGenerator extends Generator {
             Rice riceProduct = (Rice) product;
             riceProduct.updateRiceAmount(-25);  // Subtract 25 from cornAmount
         } else {
-            System.out.println("Error: This generator can only produce Corn.");
+            //System.out.println("Error: This generator can only produce Rice.");
         }
 
         return generatedAmount;
@@ -22,6 +22,7 @@ public class RiceGenerator extends Generator {
   
   public void updateResources() {
     }
-   
+
+     
    
 }
