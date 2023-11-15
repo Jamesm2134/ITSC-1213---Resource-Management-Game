@@ -5,7 +5,7 @@ public class Rice extends Resource {
      *
      * @param name the name of the Corn resource
      */
-   private int riceAmount = 50;
+   public int riceAmount = 50;
     public Rice(String name) {
         super(name);
     }
@@ -38,8 +38,5 @@ public class Rice extends Resource {
     public void collectRiceAmount(int amountToAdd) {
         this.riceAmount += amountToAdd;
     }
-    
-   
-
 
 }
