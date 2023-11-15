@@ -1,0 +1,4 @@
+interface Score {
+     int scoreImpact();
+    
+}
