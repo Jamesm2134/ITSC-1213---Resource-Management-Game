@@ -3,12 +3,13 @@ import java.util.*;
  * The Generator class represents a generic resource generating item in the game.
  * Generators have a name, a construction cost, and a resource production rate.
  */
-public abstract class Generator {
+public abstract class Generator implements Comparable<Generator>, Score {
     private String name;
-    private ArrayList<Resource> constructionCost;
+    private List<Resource> resources;
     private int resourceProductionRate;
+    private List<Resource> constructionCost;
     private int numberConstructed;
-    Resource product;
+    public Resource product;
 
     /**
      * Creates a new Generator with the given name, construction cost, resource production rate, number constructed, and product.
@@ -26,6 +27,10 @@ public abstract class Generator {
         this.numberConstructed = numberConstructed;
         this.product = product;
     }
+    
+    public static void sortGeneratorsDescending(List<Generator> generators) {
+        generators.sort(Comparator.comparingInt(Generator::getNumberConstructed).reversed());
+    }
 
     /**
      * Gets the name of the Generator.
@@ -41,7 +46,7 @@ public abstract class Generator {
      *
      * @return the construction cost of the Generator
      */
-    public ArrayList<Resource> getConstructionCost() {
+    public List<Resource> getConstructionCost() {
         return constructionCost;
     }
 
@@ -62,4 +67,19 @@ public abstract class Generator {
     public int getNumberConstructed() {
         return numberConstructed;
     }
+    
+     
+   @Override
+    public int compareTo(Generator other) {
+        // Compare based on the number constructed property in reverse order
+        return Integer.compare(other.numberConstructed, this.numberConstructed);
+    }
+    
+    
+     @Override
+    public int scoreImpact() {
+        // For simplicity, impact is based on the number of generators constructed
+        return numberConstructed;
+    }
+    
 }
