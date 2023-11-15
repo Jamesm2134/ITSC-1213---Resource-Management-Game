@@ -1,14 +1,11 @@
 public class Wheat extends Resource {
 
     /**
-     * Creates a new Corn resource with the given name and initializes the quantity to 0.
+     * Creates a new Wheat resource with the given name and initializes the quantity to 0.
      *
-     * @param name the name of the Corn resource
+     * @param name the name of the Wheat resource
      */
-    private int wheatAmount = 50;
-    public void updateWheatAmount(int amountToAdd) {
-        this.wheatAmount += amountToAdd;
-    }
+   public int wheatAmount = 50;
     public Wheat(String name) {
         super(name);
     }
@@ -20,21 +17,26 @@ public class Wheat extends Resource {
     public void setWheatAmount(int newWheatAmount) {
         this.wheatAmount = newWheatAmount;
     }
-    public void collectWheatAmount(int amountToAdd) {
-        this.wheatAmount += amountToAdd;
+    
+    public void updateWheatAmount(int amountToAdd) {
+        this.wheatAmount += amountToAdd; // Change this line to add the amount
+    }
+    
+    public void updateWheatAmountLost(int amountToAdd) {
+        this.wheatAmount -= amountToAdd; // Change this line to add the amount
+    }
+    
+    @Override
+    public void collectResourceAmount(int amount) {
+        // Assuming wheatAmount is an instance variable in the Wheat class
+        wheatAmount += amount;
     }
     
     public int collectWheat(){
         return wheatAmount;
     }
     
-    @Override
-    public void collectResourceAmount(int amountToAdd) {
+    public void collectWheatAmount(int amountToAdd) {
         this.wheatAmount += amountToAdd;
     }
-    
-   
-    
-    
-
 }
