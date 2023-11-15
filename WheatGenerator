@@ -1,17 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+import java.util.ArrayList;
 
-/**
- *
- * @author jamck
- */
-import java.util.*;
 public class WheatGenerator extends Generator {
-    
-    public WheatGenerator(String name, ArrayList<Resource> constructionCost, int resourceProductionRate, int numberConstructed, Resource product) {
-        super(name, constructionCost, resourceProductionRate, numberConstructed, product);
+
+    public WheatGenerator(String name, int numberConstructed, Resource product) {
+        super(name, new ArrayList<>(), 100, numberConstructed, product);
+        generateResource(); // Automatically generate resources when the generator is created
     }
 
+    public int generateResource() {
+        int generatedAmount = 100;  // Assuming 100 wheat is generated each time
+
+        if (product instanceof Wheat) {
+            Wheat wheatProduct = (Wheat) product;
+            wheatProduct.updateWheatAmount(generatedAmount);  // Update wheatAmount with the generated amount
+        } else {
+            //System.out.println("Error: This generator can only produce Wheat.");
+        }
+
+        return generatedAmount;
+    }
+
+    public void updateResources() {
+        // Implement any additional update logic if needed
+    }
+
+    @Override
+    public int compareTo(Generator o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
