@@ -5,7 +5,7 @@ public class Corn extends Resource {
      *
      * @param name the name of the Corn resource
      */
-   private int cornAmount = 50;
+   public int cornAmount = 50;
     public Corn(String name) {
         super(name);
     }
@@ -39,6 +39,14 @@ public class Corn extends Resource {
         this.cornAmount += amountToAdd;
     }
     
+    @Override
+    public int compareTo(Resource other) {
+        if (other instanceof Corn) {
+            // Compare based on quantity or other properties specific to Corn
+            return Integer.compare(this.quantity, ((Corn) other).quantity);
+        }
+        return super.compareTo(other);  // Handle comparison with other resource types
+    }
    
 
 
